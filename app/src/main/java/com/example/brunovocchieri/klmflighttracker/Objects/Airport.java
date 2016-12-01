@@ -23,20 +23,10 @@ public class Airport {
         return city;
     }
 
-    public String getCountry() {
-        return country;
-    }
+    public String getCountry() {return country;}
 
     public String getCode() {
         return code;
-    }
-
-    public String getLat() {
-        return lat;
-    }
-
-    public String getLon() {
-        return lon;
     }
 
 }

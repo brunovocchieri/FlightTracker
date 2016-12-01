@@ -39,7 +39,6 @@ public class FlightsListActivity extends AppCompatActivity implements ListView.O
     }
 
     @Override
-    //tracinho pra voltar
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:

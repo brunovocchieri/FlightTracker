@@ -8,7 +8,6 @@ import java.io.Serializable;
 
     public class DepartsFrom implements Serializable {
 
-
         String IATACode;
 
         public String getIATACode() {

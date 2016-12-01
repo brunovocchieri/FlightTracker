@@ -4,12 +4,11 @@
     <!-- Main Activity -->
     <string name="invalid_value">Invalid origin or destination.</string>
     <string name="insuficient_info">You must provide more information to perform the search.</string>
+    <string name="invalid_info">Departure or Destination must be AMS, Amsterdam.</string>
 
     <!-- Task GetAirportsList -->
     <string name="request_error">Error loading data.</string>
 
-    <!-- Task GetDestinationWeather -->
-    <string name="weather_error">Weather information not available.</string>
 
     <!-- Task GetFlightDetails -->
     <string name="error_flight_request">Error loading flight details.</string>

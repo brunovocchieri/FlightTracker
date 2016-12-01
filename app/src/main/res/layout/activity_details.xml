@@ -30,8 +30,7 @@
             android:layout_centerHorizontal="true"
             android:shadowDx="1"
             android:shadowDy="1"
-            android:shadowRadius="20"
-            android:text="--"/>
+            android:shadowRadius="20" />
 
         <TextView
             android:id="@+id/tvWeather"
@@ -45,8 +44,7 @@
             android:layout_marginBottom="30dp"
             android:shadowDx="1"
             android:shadowDy="1"
-            android:shadowRadius="10"
-            android:text="@string/loading"/>
+            android:shadowRadius="10" />
 
         <RelativeLayout
             android:layout_width="match_parent"

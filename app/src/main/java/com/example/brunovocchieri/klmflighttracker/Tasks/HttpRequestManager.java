@@ -61,6 +61,7 @@ public class HttpRequestManager implements JSONObjectRequestListener, StringRequ
 
 
     private String getAbsoluteUrl(String relativeUrl) {
+
         return BASE_URL + relativeUrl;
     }
 

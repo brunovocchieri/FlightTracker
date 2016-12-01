@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
  * Created by Bruno Vocchieri on 23/10/2016.
  */public class ListFlightsAdapter extends BaseAdapter {
 
-
     private LayoutInflater mInflater;
     Context mContext;
     ArrayList<Flight> flights;
@@ -46,19 +45,15 @@ import butterknife.ButterKnife;
     }
 
     @Override
-    public int getCount() {
-        return flights.size();
-    }
+    public int getCount() {return flights.size();}
 
     @Override
     public Object getItem(int position) {
         return flights.get(position);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+   @Override
+    public long getItemId(int position) { return position; }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -79,12 +74,9 @@ import butterknife.ButterKnife;
         holder.tvFlightNumber.setText(f.getFlightNumber());
         holder.tvOrigin.setText(f.getOperatingFlightLeg().getDepartsFrom().getIATACode());
         holder.tvDestination.setText(f.getOperatingFlightLeg().getArrivesOn().getIATACode());
-
         holder.tvDepartureTime.setText(Constants.formatDate(f.getOperatingFlightLeg().getScheduledDepartureDateTime()));
         holder.tvArrivalTime.setText(Constants.formatDate(f.getOperatingFlightLeg().getScheduledArrivalDateTime()));
-
         holder.tvStatus.setText(f.getOperatingFlightLeg().getFlightStatus().replace("_", " "));
-
 
         return convertView;
 

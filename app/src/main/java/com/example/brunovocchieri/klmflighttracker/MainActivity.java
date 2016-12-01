@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
     @Bind(R.id.tvSearch)       TextView tvSearch;
     @BindString(R.string.invalid_value) String ERROR_INVALID_VALUE;
     @BindString(R.string.insuficient_info) String ERROR_INSUFICIENT_INFORMATION;
+    @BindString(R.string.invalid_info)String ERROR_INVALID_AIRPORT;
 
 
     @OnClick(R.id.etSelectDate)
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);//inicializa tudo o q esta encima
+        ButterKnife.bind(this);
 
         etFlight.setNextFocusDownId(R.id.etSelectDate);
 
@@ -76,12 +77,6 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
 
     }
 
-    /**
-     * This method is responsible for setting OnFocusListener to the EditText Select Date.
-     * Setting this listener is important to improve the user experience in the app.
-     * What it does is, when the user finish typing the Flight Number and tap "Enter" on
-     * the keyboard, the Select Date gets the focus and automatically starts the DatePicker.
-     */
     public void setOnFocusChangeListener(EditText et){
 
         et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -94,14 +89,6 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
         });
     }
 
-
-    /**
-     * This method is responsible for setting OnItemClickListener to the EditText Departure
-     * and Destination.
-     * Setting this listener is important to improve the user experience in the app.
-     * What it does is, when the user tap a departure or destination sugestion, it
-     * move the focus to the next view to receive the action.
-     */
     public AdapterView.OnItemClickListener OnItemClickListener(AutoCompleteTextView tv){
 
         AdapterView.OnItemClickListener listener = null;
@@ -131,11 +118,6 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
         return listener;
     }
 
-
-    /**
-     * This method is called to initialize the DatePicker when Select Date receive the focus
-     * or is clicked by the user.
-     */
     public void startDatePicker(){
         CalendarDatePickerDialogFragment datePicker = new CalendarDatePickerDialogFragment()
                 .setOnDateSetListener(this)
@@ -143,11 +125,6 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
         datePicker.show(getSupportFragmentManager(), null);
     }
 
-
-    /**
-     * Overrided method from DatePicker.
-     * This method is called every time the user finishes a date selection in the calendar.
-     */
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
         String day = (dayOfMonth < 10) ? "0" + dayOfMonth : "" + dayOfMonth;
@@ -158,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
 
 
     /**
-     * Method called to perfom search for flight using data provided by the user.
+     * Method called to perform search for flight using data provided by the user.
      */
     public void performSearch(String flight_number, String selected_date, String departure, String destination){
 
@@ -168,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
             new ServerTask(this).getFlightsList("departureDate=" + selected_date + "&flightNumber=" + flight_number, false, "SINGLE_FLIGHT");
 
         }
-        //Verifies if departure and destination aren' empty.
+        //Verifies if departure and destination aren't empty.
         else if (!departure.trim().isEmpty() && !destination.trim().isEmpty()) {
 
             //Verifies if departure and destination are a valid value.
@@ -178,9 +155,13 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
                 departure = departure.substring(0, departure.indexOf(","));
                 destination = destination.substring(0, destination.indexOf(","));
 
-                //Perform search by departure and destination
-                new ServerTask(this).getFlightsList("originAirportCode=" + departure + "&destinationAirportCode=" + destination, false, "LIST_FLIGHT");
-
+                if( departure.contains("AMS") || destination.contains("AMS")) {
+                    //Perform search by departure and destination
+                    new ServerTask(this).getFlightsList("originAirportCode=" + departure + "&destinationAirportCode=" + destination, false, "LIST_FLIGHT");
+                }
+                    else{
+                        Toast.makeText(MainActivity.this, ERROR_INVALID_AIRPORT, Toast.LENGTH_SHORT).show();
+                    }
             }
             else{
                 //Tells the user that origin or destination is invalid.
@@ -208,6 +189,6 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskL
 
     @Override
     public void onRequestError() {
-        Toast.makeText(this, "Flight not found.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Flight not found or not exist.", Toast.LENGTH_SHORT).show();
     }
 }

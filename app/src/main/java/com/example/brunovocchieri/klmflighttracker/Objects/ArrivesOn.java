@@ -5,8 +5,8 @@ import java.io.Serializable;
 /**
  * Created by Bruno Vocchieri on 23/10/2016.
  */
-public class ArrivesOn implements Serializable {
 
+public class ArrivesOn implements Serializable {
 
     String IATACode;
 

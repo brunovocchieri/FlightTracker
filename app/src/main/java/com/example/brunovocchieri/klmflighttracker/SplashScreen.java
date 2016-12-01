@@ -23,14 +23,13 @@ public class SplashScreen extends AppCompatActivity implements TaskManager.TaskL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //deixar tela cheia
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);   		 requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen);
 
-        //Load list of airports
         new ServerTask(this).getAirportList(AIRPORTS_REQUEST_URL, true, "AIRPORT_LIST");
 
     }

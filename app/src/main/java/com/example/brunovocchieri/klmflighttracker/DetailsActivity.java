@@ -9,12 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.brunovocchieri.klmflighttracker.Objects.Flight;
-import com.example.brunovocchieri.klmflighttracker.Objects.Weather;
 import com.example.brunovocchieri.klmflighttracker.Tasks.GetDestinationImage;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,9 +20,6 @@ import butterknife.ButterKnife;
 public class DetailsActivity extends AppCompatActivity {
     @Bind(R.id.ivPhoto)
     ImageView ivPhoto;
-    @Bind(R.id.tvDegrees)
-    TextView tvDegrees;
-    @Bind(R.id.tvWeather)      TextView tvExtra;
     @Bind(R.id.tvDeparture)    TextView tvDeparture;
     @Bind(R.id.tvArrival)      TextView tvArrival;
     @Bind(R.id.tvDepartDate)   TextView tvDepartDate;
@@ -52,15 +44,6 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.activity_details);
-        ButterKnife.bind(this);
-
-        initUI();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
@@ -79,17 +62,10 @@ public class DetailsActivity extends AppCompatActivity {
         tvStatus.setText(details.getOperatingFlightLeg().getFlightStatus().replace("_", " "));
 
         String destination_code = details.getOperatingFlightLeg().getArrivesOn().getIATACode();
-        String destination_lat = details.getLatitude(destination_code);
-        String destination_lon = details.getLongitude(destination_code);
-        String destination_city = details.searchAirport(destination_code);
+
 
         //Load destination photo.
         new GetDestinationImage(this, destination_code, ivPhoto).execute();
-
-        //TODO Load info about weather from Forecast.io
-       // new GetDestinationWeather(this, destination_lat, destination_lon).request();
-
-
 
         tvBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,17 +74,6 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-    /**
-     * Method called when all data about weather is fetched.
-     */
-   /* @Override
-    public void onLoadWeatherCompleted(Weather weather) {
-        tvDegrees.setText(weather.getDegrees());
-        tvExtra.setText(weather.getExtra_info());
-    }*/
 
 
 }
